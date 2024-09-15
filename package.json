@@ -1,0 +1,30 @@
+{
+	"name": "fts-lib",
+	"version": "0.1.0",
+	"description": "Types for ",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"email-dev": "email dev"
+	},
+	"author": "Falchion Studios",
+	"license": "UNLICENSED",
+	"dependencies": {
+		"@sendgrid/mail": "^8.1.3",
+		"astro": "^4.15.6",
+		"zod": "^3.23.8",
+		"zod-validation-error": "^3.3.1",
+		"@react-email/components": "0.0.25",
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
+		"react-email": "3.0.1"
+	},
+	"devDependencies": {
+		"@types/react": "18.3.4",
+		"@types/react-dom": "18.3.0"
+	},
+	"files": [
+		"dist"
+	],
+	"types": "dist/index.d.ts"
+}
