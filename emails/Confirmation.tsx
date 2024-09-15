@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import dayjs from "dayjs";
 import tailwindConfig from "./tailwind.config";
 import { ReactDonate } from "./components/ReactDonate";
-import { site, type IssueEmail } from "fts-lib";
+import { site } from "../src/types";
 
 
 export default function Confirmation() {

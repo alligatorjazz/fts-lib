@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import dayjs from "dayjs";
 import tailwindConfig from "./tailwind.config";
 import { ReactDonate } from "./components/ReactDonate";
-import { site, type IssueEmail } from "fts-lib";
+import { IssueEmail, site } from "../src/types";
 
 // TODO: have the astro config and the emails inherit from the same source
 
