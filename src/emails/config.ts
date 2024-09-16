@@ -1,3 +1,3 @@
 export const testEmails = [
-	"dimitrisonic@gmail.com"
+	"abc@123.com"
 ]

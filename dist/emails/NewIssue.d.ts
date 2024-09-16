@@ -1,4 +1,4 @@
-import { IssueEmail } from "../types";
+import { IssueEmail } from "../types.js";
 export default function NewIssue({ issue }: {
     issue?: IssueEmail;
-}): import("react").JSX.Element;
+}): import("react/jsx-runtime").JSX.Element;

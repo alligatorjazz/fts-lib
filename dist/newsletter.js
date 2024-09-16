@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,13 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { render } from "@react-email/components";
-import sendgrid from "@sendgrid/mail";
-import dayjs from "dayjs";
-import "dotenv/config";
-import Parser from 'rss-parser';
-import NewIssue from "./emails/NewIssue";
-import Confirmation from "./emails/Confirmation";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.loadSendgridApi = loadSendgridApi;
+exports.getIssues = getIssues;
+exports.getLatestIssue = getLatestIssue;
+exports.sendLatestIssue = sendLatestIssue;
+exports.sendConfirmationEmail = sendConfirmationEmail;
+const components_1 = require("@react-email/components");
+const mail_1 = __importDefault(require("@sendgrid/mail"));
+const dayjs_1 = __importDefault(require("dayjs"));
+require("dotenv/config");
+const rss_parser_1 = __importDefault(require("rss-parser"));
+const NewIssue_js_1 = __importDefault(require("./emails/NewIssue.js"));
+const Confirmation_js_1 = __importDefault(require("./emails/Confirmation.js"));
 const testTarget = "dimitrisonic@gmail.com";
 const defaultEmail = {
     from: "newsletter@fromthesuperhighway.com",
@@ -22,17 +32,17 @@ const defaultEmail = {
         groupsToDisplay: [26518]
     }
 };
-export function loadSendgridApi() {
+function loadSendgridApi() {
     const key = process.env["SENDGRID_API_KEY"];
     if (!key || key.length === 0) {
         throw new Error("Sendgrid API key missing or malformed.");
     }
-    sendgrid.setApiKey(key);
-    return sendgrid;
+    mail_1.default.setApiKey(key);
+    return mail_1.default;
 }
-export function getIssues() {
+function getIssues() {
     return __awaiter(this, void 0, void 0, function* () {
-        const parser = new Parser({
+        const parser = new rss_parser_1.default({
             customFields: {
                 item: ["content:encoded", "content:encodedSnippet"]
             }
@@ -60,21 +70,21 @@ export function getIssues() {
         return emails;
     });
 }
-export function getLatestIssue() {
+function getLatestIssue() {
     return __awaiter(this, void 0, void 0, function* () {
-        const sortedIssues = (yield getIssues()).sort(({ data: { publishDate: date1 } }, { data: { publishDate: date2 } }) => dayjs(date1).diff(date2));
+        const sortedIssues = (yield getIssues()).sort(({ data: { publishDate: date1 } }, { data: { publishDate: date2 } }) => (0, dayjs_1.default)(date1).diff(date2));
         return sortedIssues[0];
     });
 }
-export function sendLatestIssue(to) {
+function sendLatestIssue(to) {
     return __awaiter(this, void 0, void 0, function* () {
         const issue = yield getLatestIssue();
         console.log(`Preparing send for Issue "${issue.data.title}"`);
         console.log("Building HTML render...");
-        const html = yield render(NewIssue({ issue }), { pretty: true });
+        const html = yield (0, components_1.render)((0, NewIssue_js_1.default)({ issue }), { pretty: true });
         console.log("Render complete.");
         console.log("Building plain text render...");
-        const plain = yield render(NewIssue({ issue }), { plainText: true });
+        const plain = yield (0, components_1.render)((0, NewIssue_js_1.default)({ issue }), { plainText: true });
         console.log("Render complete.");
         console.log("Loading Sendgrid API...");
         const sendgrid = loadSendgridApi();
@@ -83,15 +93,15 @@ export function sendLatestIssue(to) {
         return `Email sent to ${to}.`;
     });
 }
-export function sendConfirmationEmail(to) {
+function sendConfirmationEmail(to) {
     return __awaiter(this, void 0, void 0, function* () {
         const issue = yield getLatestIssue();
         console.log(`Preparing send for confirmation email for "${to}"`);
         console.log("Building HTML render...");
-        const html = yield render(Confirmation(), { pretty: true });
+        const html = yield (0, components_1.render)((0, Confirmation_js_1.default)(), { pretty: true });
         console.log("Render complete.");
         console.log("Building plain text render...");
-        const plain = yield render(Confirmation(), { plainText: true });
+        const plain = yield (0, components_1.render)((0, Confirmation_js_1.default)(), { plainText: true });
         console.log("Render complete.");
         console.log("Loading Sendgrid API...");
         const sendgrid = loadSendgridApi();

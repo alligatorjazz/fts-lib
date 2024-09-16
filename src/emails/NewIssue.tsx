@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { Body, Button, Container, Font, Head, Heading, Hr, Html, Link, Markdown, Preview, Section, Tailwind } from "@react-email/components";
 import dayjs from "dayjs";
-import { IssueEmail, site } from "../types";
-import { Footer } from "./components/Footer";
-import tailwindConfig from "./tailwind.config";
+import { IssueEmail, site } from "../types.js";
+import { Footer } from "./components/Footer.js";
+import tailwindConfig from "./tailwind.config.js";
 
 
 export default function NewIssue({ issue }: { issue?: IssueEmail }) {

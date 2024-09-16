@@ -1,7 +1,7 @@
 import { Body, Button, Container, Font, Head, Heading, Hr, Html, Link, Markdown, Preview, Section, Tailwind } from "@react-email/components";
-import { site } from "../types";
-import { Footer } from "./components/Footer";
-import tailwindConfig from "./tailwind.config";
+import { site } from "../types.js";
+import { Footer } from "./components/Footer.js";
+import tailwindConfig from "./tailwind.config.js";
 
 
 export default function Confirmation() {

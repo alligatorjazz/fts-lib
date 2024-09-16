@@ -3,9 +3,9 @@ import sendgrid, { MailDataRequired } from "@sendgrid/mail";
 import dayjs from "dayjs";
 import "dotenv/config";
 import Parser from 'rss-parser';
-import { Issue, type IssueEmail } from "./types";
-import NewIssue from "./emails/NewIssue";
-import Confirmation from "./emails/Confirmation";
+import { Issue, type IssueEmail } from "./types.js";
+import NewIssue from "./emails/NewIssue.js";
+import Confirmation from "./emails/Confirmation.js";
 
 
 const testTarget = "dimitrisonic@gmail.com";

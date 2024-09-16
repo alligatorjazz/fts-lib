@@ -1,6 +1,6 @@
 import { Container, Link, Section, Text } from "@react-email/components";
-import { site } from "../../types";
-import { ReactDonate } from "./ReactDonate";
+import { site } from "../../types.js";
+import { ReactDonate } from "./ReactDonate.js";
 
 export function Footer() {
 	return (

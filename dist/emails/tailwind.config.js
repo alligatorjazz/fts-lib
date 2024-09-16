@@ -1,4 +1,6 @@
-export default {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
     theme: {
         fontSize: {
             xs: ["12px", { lineHeight: "16px" }],

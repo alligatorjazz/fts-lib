@@ -1,1 +1,1 @@
-export declare function ReactDonate(): import("react").JSX.Element;
+export declare function ReactDonate(): import("react/jsx-runtime").JSX.Element;

@@ -1,7 +1,7 @@
 {
 	"name": "fts-lib",
-	"version": "0.1.0",
-	"description": "Types for ",
+	"version": "0.1.3rc6",
+	"description": "Utilities and types for From The Superhighway",
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "tsc",
