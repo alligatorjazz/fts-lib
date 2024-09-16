@@ -1,9 +1,9 @@
-import { Html, Text, Button, Head, Preview, Body, Container, Heading, Tailwind, Hr, Section, Font, Link, Row, Markdown } from "@react-email/components";
 import { faker } from "@faker-js/faker";
+import { Body, Button, Container, Font, Head, Heading, Hr, Html, Link, Markdown, Preview, Section, Tailwind } from "@react-email/components";
 import dayjs from "dayjs";
+import { IssueEmail, site } from "../types";
+import { Footer } from "./components/Footer";
 import tailwindConfig from "./tailwind.config";
-import { ReactDonate } from "./components/ReactDonate";
-import { type IssueEmail, site } from "../src/types";
 
 // TODO: have the astro config and the emails inherit from the same source
 
@@ -64,21 +64,7 @@ export default function NewIssue({ issue }: { issue?: IssueEmail }) {
 						<Button className="bg-fgColor p-3 text-textColor " href={issueLink}>{">: "} Read On Site</Button>
 					</Container>
 					<Hr className="my-8" />
-					<Container className="mx-auto text-center mb-4">
-						<Container className="mb-2">
-							<Link href={site} className="uppercase font-bold text-xl m-0 text-textColor">{">: From The Superhighway"}</Link>
-							<Text className="m-0 mb-2 italic">...is a <Link className="text-accentColor" href="https://falchionstudios.com">Falchion Studios</Link> project.</Text>
-							<ReactDonate />
-						</Container>
-						<Container className="mb-4">
-							<Text className="m-0">6404 Mainsail Ct</Text>
-							<Text className="m-0">Orlando, FL 32807</Text>
-						</Container>
-
-					</Container>
-					<Section className="text-center text-sm">
-						<Link href={`${site}/unsubscribe`} className="text-accentColor">Unsubscribe</Link>
-					</Section>
+					<Footer />
 				</Body>
 
 			</Html>

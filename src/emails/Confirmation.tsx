@@ -1,9 +1,7 @@
-import { Html, Text, Button, Head, Preview, Body, Container, Heading, Tailwind, Hr, Section, Font, Link, Row, Markdown } from "@react-email/components";
-import { faker } from "@faker-js/faker";
-import dayjs from "dayjs";
+import { Body, Button, Container, Font, Head, Heading, Hr, Html, Link, Markdown, Preview, Section, Tailwind } from "@react-email/components";
+import { site } from "../types";
+import { Footer } from "./components/Footer";
 import tailwindConfig from "./tailwind.config";
-import { ReactDonate } from "./components/ReactDonate";
-import { site } from "../src/types";
 
 
 export default function Confirmation() {
@@ -59,25 +57,11 @@ export default function Confirmation() {
 							image: { maxHeight: "420px", width: "100%", objectFit: "contain", padding: "1rem 0" }
 						}}
 					>
-						If you didn't sign up, you can safely ignore this email - sorry for the confusion.	
+						If you didn't sign up, you can safely ignore this email - sorry for the confusion.
 					</Markdown>
 					<p>- ajazz</p>
 					<Hr className="my-8" />
-					<Container className="mx-auto text-center mb-4">
-						<Container className="mb-2">
-							<Link href={site} className="uppercase font-bold text-xl m-0 text-textColor">{">: From The Superhighway"}</Link>
-							<Text className="m-0 mb-2 italic">...is a <Link className="text-accentColor" href="https://falchionstudios.com">Falchion Studios</Link> project.</Text>
-							<ReactDonate />
-						</Container>
-						<Container className="mb-4">
-							<Text className="m-0">6404 Mainsail Ct</Text>
-							<Text className="m-0">Orlando, FL 32807</Text>
-						</Container>
-
-					</Container>
-					<Section className="text-center text-sm">
-						<Link href={`${site}/unsubscribe`} className="text-accentColor">Unsubscribe</Link>
-					</Section>
+					<Footer />
 				</Body>
 
 			</Html>

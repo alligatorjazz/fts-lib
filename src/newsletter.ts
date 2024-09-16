@@ -1,11 +1,12 @@
 import { render } from "@react-email/components";
-import sendgrid from "@sendgrid/mail";
+import sendgrid, { MailDataRequired } from "@sendgrid/mail";
 import dayjs from "dayjs";
 import "dotenv/config";
 import Parser from 'rss-parser';
-import NewIssue from "../emails/NewIssue";
 import { Issue, type IssueEmail } from "./types";
-import Confirmation from "../emails/Confirmation";
+import NewIssue from "./emails/NewIssue";
+import Confirmation from "./emails/Confirmation";
+
 
 const testTarget = "dimitrisonic@gmail.com";
 type FeedItem = {
@@ -13,6 +14,14 @@ type FeedItem = {
 	"content:encodedSnippet": string,
 	description: string
 };
+
+const defaultEmail = {
+	from: "newsletter@fromthesuperhighway.com",
+	asm: {
+		groupId: 26518,
+		groupsToDisplay: [26518]
+	}
+} satisfies Partial<MailDataRequired>
 
 export function loadSendgridApi() {
 	const key = process.env["SENDGRID_API_KEY"];
@@ -59,7 +68,7 @@ export async function getLatestIssue(): Promise<IssueEmail> {
 	return sortedIssues[0];
 }
 
-async function sendLatestIssue(to: string): Promise<unknown> {
+export async function sendLatestIssue(to: string): Promise<unknown> {
 	const issue = await getLatestIssue();
 	console.log(`Preparing send for Issue "${issue.data.title}"`);
 
@@ -75,20 +84,16 @@ async function sendLatestIssue(to: string): Promise<unknown> {
 	console.log("Sending test email to: ", testTarget);
 
 	await sendgrid.send({
-		from: "newsletter@fromthesuperhighway.com",
+		...defaultEmail,
 		to,
 		subject: issue.data.title,
-		html,
-		asm: {
-			groupId: 26518,
-			groupsToDisplay: [26518]
-		}
+		html
 	});
 
 	return `Email sent to ${to}.`;
 }
 
-async function sendConfirmationEmail(to: string): Promise<unknown> {
+export async function sendConfirmationEmail(to: string): Promise<unknown> {
 	const issue = await getLatestIssue();
 	console.log(`Preparing send for confirmation email for "${to}"`);
 
@@ -103,14 +108,10 @@ async function sendConfirmationEmail(to: string): Promise<unknown> {
 	const sendgrid = loadSendgridApi();
 
 	await sendgrid.send({
-		from: "newsletter@fromthesuperhighway.com",
+		...defaultEmail,
 		to,
 		subject: issue.data.title,
 		html,
-		asm: {
-			groupId: 26518,
-			groupsToDisplay: [26518]
-		}
 	});
 
 	return `Email sent to ${to}.`;
