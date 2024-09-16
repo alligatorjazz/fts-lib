@@ -5,7 +5,6 @@ import { IssueEmail, site } from "../types";
 import { Footer } from "./components/Footer";
 import tailwindConfig from "./tailwind.config";
 
-// TODO: have the astro config and the emails inherit from the same source
 
 export default function NewIssue({ issue }: { issue?: IssueEmail }) {
 	const issueLink = issue?.slug ? `${site}/issues/${issue.slug}` : site;
