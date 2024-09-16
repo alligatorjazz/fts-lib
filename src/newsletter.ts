@@ -4,15 +4,14 @@ import { prompt } from "./utils";
 import NewIssue from "../emails/NewIssue";
 
 const testTarget = "dimitrisonic@gmail.com";
-async function sendLatestIssue(): Promise<unknown> {
+async function sendLatestIssue(to: string): Promise<unknown> {
 	const { issue, count } = await getLatestIssue();
 	console.log(`Preparing send for Issue #${count}: ${issue.slug}`);
 	console.log(JSON.stringify(issue.data, null, 4))
-	const result = prompt("Is this the issue you want to send? (y/N) | ")
-
-	if (result !== "y") {
-		return "Aborted send."
-	}
+	// const result = prompt("Is this the issue you want to send? (y/N) | ")
+	// if (result !== "y") {
+	// 	return "Aborted send."
+	// }
 
 	console.log("Building HTML render...")
 	const html = await render(NewIssue({ issue }), { pretty: true });
@@ -27,7 +26,7 @@ async function sendLatestIssue(): Promise<unknown> {
 
 	await sendgrid.send({
 		from: "newsletter@fromthesuperhighway.com",
-		to: "dimitrisonic@gmail.com",
+		to,
 		subject: issue.data.title,
 		html
 	});

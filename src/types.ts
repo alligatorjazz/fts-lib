@@ -41,3 +41,4 @@ export interface CloudFunctionContext {
 }
 
 export const site = "https://fromthesuperhighway.com";
+export const newsletterAddress = "newsletter@fromthesuperhighway.com";
