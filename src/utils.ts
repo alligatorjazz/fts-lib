@@ -5,7 +5,7 @@ import { readdirSync, readFileSync } from "fs";
 import { join, basename } from "path";
 import Prompt from "prompt-sync";
 import sendgrid from "@sendgrid/mail";
-import { IssueEmail, IssueSchema } from "./types";
+import { type IssueEmail, IssueSchema } from "./types";
 
 export function loadSendgridApi() {
 	const key = process.env["SENDGRID_API_KEY"];
