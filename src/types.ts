@@ -31,7 +31,11 @@ export type IssueEmail = { data: Issue, slug: string, body: string };
 export type Issue = z.infer<typeof IssueSchema>;
 
 export interface CloudFunctionContext {
-	req: { body: string; bodyRaw: string; method: string };
+	req: {
+		bodyText: string;
+		bodyRaw: string;
+		method: string;
+	};
 	res: {
 		send: (data: string) => void;
 		json: (data: object, status?: number) => void;
