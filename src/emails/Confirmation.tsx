@@ -4,8 +4,8 @@ import { Footer } from "./components/Footer.js";
 import tailwindConfig from "./tailwind.config.js";
 
 
-export default function Confirmation() {
-	const latestLink = site + "/latest";
+export default function Confirmation({ code }: { code: string }) {
+	const confirmLink = site + `/confirm?code=${code}`;
 
 	return (
 		<Tailwind config={tailwindConfig}>
@@ -46,7 +46,7 @@ export default function Confirmation() {
 						Hey there! Looks like you signed up for the **FROM THE SUPERHIGHWAY** newsletter. If you did, all you need to do now is click the button below, and you'll be added to our list and taken to the latest issue of the newsletter.
 					</Markdown>
 					<Container className="mx-auto text-center">
-						<Button className="bg-fgColor p-3 text-textColor " href={latestLink}>{">: "} Confirm Your Email</Button>
+						<Button className="bg-fgColor p-3 text-textColor " href={confirmLink}>{">: "} Confirm Your Email</Button>
 					</Container>
 					<Markdown
 						markdownCustomStyles={{

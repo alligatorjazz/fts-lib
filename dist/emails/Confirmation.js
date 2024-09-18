@@ -3,8 +3,8 @@ import { Body, Button, Container, Font, Head, Heading, Hr, Html, Link, Markdown,
 import { site } from "../types.js";
 import { Footer } from "./components/Footer.js";
 import tailwindConfig from "./tailwind.config.js";
-export default function Confirmation() {
-    const latestLink = site + "/latest";
+export default function Confirmation({ code }) {
+    const confirmLink = site + `/confirm?code=${code}`;
     return (_jsx(Tailwind, { config: tailwindConfig, children: _jsxs(Html, { children: [_jsxs(Head, { children: [_jsx("title", { children: "Confirm Your FTS Subscription" }), _jsx(Font, { fontFamily: "Cousine", fallbackFontFamily: "Verdana", webFont: {
                                 url: "https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&display=swap",
                                 format: "woff2"
@@ -14,7 +14,7 @@ export default function Confirmation() {
                                 link: { color: "rgb(241,181,234)" },
                                 p: { lineHeight: "1.5em" },
                                 image: { maxHeight: "420px", width: "100%", objectFit: "contain", padding: "1rem 0" }
-                            }, children: "Hey there! Looks like you signed up for the **FROM THE SUPERHIGHWAY** newsletter. If you did, all you need to do now is click the button below, and you'll be added to our list and taken to the latest issue of the newsletter." }), _jsx(Container, { className: "mx-auto text-center", children: _jsxs(Button, { className: "bg-fgColor p-3 text-textColor ", href: latestLink, children: [">: ", " Confirm Your Email"] }) }), _jsx(Markdown, { markdownCustomStyles: {
+                            }, children: "Hey there! Looks like you signed up for the **FROM THE SUPERHIGHWAY** newsletter. If you did, all you need to do now is click the button below, and you'll be added to our list and taken to the latest issue of the newsletter." }), _jsx(Container, { className: "mx-auto text-center", children: _jsxs(Button, { className: "bg-fgColor p-3 text-textColor ", href: confirmLink, children: [">: ", " Confirm Your Email"] }) }), _jsx(Markdown, { markdownCustomStyles: {
                                 h3: { fontSize: "1.2em", fontWeight: "bold" },
                                 h4: { fontSize: "1em", fontStyle: "italic" },
                                 link: { color: "rgb(241,181,234)" },

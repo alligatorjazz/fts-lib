@@ -30,7 +30,7 @@ export type IssueEmail = {
 export type Issue = z.infer<typeof IssueSchema>;
 export interface CloudFunctionContext {
     req: {
-        body: string;
+        bodyText: string;
         bodyRaw: string;
         method: string;
     };

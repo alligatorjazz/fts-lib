@@ -5,4 +5,4 @@ export declare function loadSendgridApi(): sendgrid.MailService;
 export declare function getIssues(): Promise<IssueEmail[]>;
 export declare function getLatestIssue(): Promise<IssueEmail>;
 export declare function sendLatestIssue(to: string): Promise<unknown>;
-export declare function sendConfirmationEmail(to: string): Promise<unknown>;
+export declare function sendConfirmationEmail(to: string, code: string): Promise<unknown>;

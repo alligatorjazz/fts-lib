@@ -72,14 +72,14 @@ export async function sendLatestIssue(to) {
     });
     return `Email sent to ${to}.`;
 }
-export async function sendConfirmationEmail(to) {
+export async function sendConfirmationEmail(to, code) {
     const issue = await getLatestIssue();
     console.log(`Preparing send for confirmation email for "${to}"`);
     console.log("Building HTML render...");
-    const html = await render(Confirmation(), { pretty: true });
+    const html = await render(Confirmation({ code }), { pretty: true });
     console.log("Render complete.");
     console.log("Building plain text render...");
-    const plain = await render(Confirmation(), { plainText: true });
+    const plain = await render(Confirmation({ code }), { plainText: true });
     console.log("Render complete.");
     console.log("Loading Sendgrid API...");
     const sendgrid = loadSendgridApi();

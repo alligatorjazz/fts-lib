@@ -1,1 +1,3 @@
-export default function Confirmation(): import("react/jsx-runtime").JSX.Element;
+export default function Confirmation({ code }: {
+    code: string;
+}): import("react/jsx-runtime").JSX.Element;
