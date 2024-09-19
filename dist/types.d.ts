@@ -11,15 +11,18 @@ export declare const IssueSchema: z.ZodObject<{
     publishDate: z.ZodUnion<[z.ZodString, z.ZodDate]>;
     description: z.ZodString;
     tags: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    poster: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     title: string;
     publishDate: string | Date;
     description: string;
+    poster: string;
     tags?: string[] | undefined;
 }, {
     title: string;
     publishDate: string | Date;
     description: string;
+    poster: string;
     tags?: string[] | undefined;
 }>;
 export type IssueEmail = {

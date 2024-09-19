@@ -13,7 +13,8 @@ export const IssueSchema = z.object({
     "title": z.string(),
     "publishDate": z.union([z.string(), z.date()]),
     "description": z.string(),
-    "tags": z.array(z.string()).optional()
+    "tags": z.array(z.string()).optional(),
+    "poster": z.string()
 });
 export const site = "https://fromthesuperhighway.com";
 export const newsletterAddress = "newsletter@fromthesuperhighway.com";

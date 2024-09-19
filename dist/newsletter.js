@@ -37,7 +37,7 @@ export async function getIssues() {
             title: item.title,
             description: item.description,
             publishDate: item.pubDate ?? new Date("1970"),
-            tags: item.categories
+            tags: item.categories,
         };
         const slug = item.link.split("/").at(-1);
         if (!slug) {
