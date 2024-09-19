@@ -43,7 +43,7 @@ export default function Confirmation({ code }: { code: string }) {
 							image: { maxHeight: "420px", width: "100%", objectFit: "contain", padding: "1rem 0" }
 						}}
 					>
-						Hey there! Looks like you signed up for the **FROM THE SUPERHIGHWAY** newsletter. If you did, all you need to do now is click the button below, and you'll be added to our list and taken to the latest issue of the newsletter.
+						Hey there! Looks like you signed up for the **FROM THE SUPERHIGHWAY** newsletter. If you did, all you need to do now is click the button below to confirm your subscription, and you'll be added to our list and taken to the latest issue.
 					</Markdown>
 					<Container className="mx-auto text-center">
 						<Button className="bg-fgColor p-3 text-textColor " href={confirmLink}>{">: "} Confirm Your Email</Button>

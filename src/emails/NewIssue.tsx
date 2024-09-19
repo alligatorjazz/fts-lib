@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Body, Button, Container, Font, Head, Heading, Hr, Html, Link, Markdown, Preview, Section, Tailwind } from "@react-email/components";
+import { Body, Button, Container, Font, Head, Heading, Hr, Html, Img, Link, Markdown, Preview, Section, Tailwind, Text } from "@react-email/components";
 import dayjs from "dayjs";
 import { IssueEmail, site } from "../types.js";
 import { Footer } from "./components/Footer.js";
@@ -29,20 +29,30 @@ export default function NewIssue({ issue }: { issue?: IssueEmail }) {
 				<Body className="text-textColor bg-bgColor p-4">
 					<Link href={issueLink} className="leading-tight text-textColor" target="_blank">
 						<Section>
-							<Heading as="h1" className="text-3xl">
+							<Heading as="h1" className="text-3xl text-textColor">
 								{">: FTS | "}{`${dayjs(issue?.data.publishDate ?? Date.now()).format("MM.YYYY")}`}
 							</Heading>
-							<Heading as="h2" className="text-lg">{issue?.data.title ?? faker.lorem.sentence({ min: 5, max: 10 }).toLowerCase()}</Heading>
+							<Heading as="h2" className="text-lg text-textColor">{issue?.data.title ?? faker.lorem.sentence({ min: 5, max: 10 }).toLowerCase()}</Heading>
 							<Heading as="h2" className="text-sm">
 								{issue?.data.description ?? faker.lorem.sentence()}
 							</Heading>
+							<Text className="text-accentColor font-bold text-xl">{">: Read on Main Site ↗"}</Text>
 						</Section>
 					</Link>
 					<Hr />
+					<Container className="w-full">
+						<Img
+							src={issue?.data.poster ?? faker.image.urlPlaceholder({ width: 1280, height: 720 })}
+							alt={issue?.data.description}
+							width={854}
+							height={480}
+							className="object-contain w-full max-h-72"
+						/>
+					</Container>
 					<Markdown
 						markdownCustomStyles={{
-							h3: { fontSize: "1.2em", fontWeight: "bold" },
-							h4: { fontSize: "1em", fontStyle: "italic" },
+							h2: { fontSize: "1.5em", fontWeight: "bold" },
+							h3: { fontSize: "1.2em" },
 							link: { color: "rgb(241,181,234)" },
 							p: { lineHeight: "1.5em" },
 							image: { maxHeight: "420px", width: "100%", objectFit: "contain", padding: "1rem 0" }
@@ -64,8 +74,8 @@ export default function NewIssue({ issue }: { issue?: IssueEmail }) {
 					</Container>
 					<Hr className="my-8" />
 					<Footer />
-				</Body>
 
+				</Body>
 			</Html>
 		</Tailwind >
 	);

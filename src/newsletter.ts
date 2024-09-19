@@ -7,19 +7,25 @@ import { Issue, type IssueEmail } from "./types.js";
 import NewIssue from "./emails/NewIssue.js";
 import Confirmation from "./emails/Confirmation.js";
 
-
-const testTarget = "dimitrisonic@gmail.com";
 type FeedItem = {
 	"content:encoded": string,
 	"content:encodedSnippet": string,
-	description: string
+	description: string,
+	poster: string
 };
 
 const defaultEmail = {
 	from: "newsletter@fromthesuperhighway.com",
-	asm: {
-		groupId: 26518,
-		groupsToDisplay: [26518]
+	// asm: {
+	// 	groupId: 26518,
+	// 	groupsToDisplay: [26518]
+	// },
+	trackingSettings: {
+		subscriptionTracking: {
+			enable: true,
+			html: `<div style="text-align: center; width: 100%; color: rgb(241, 181, 234) !important;"><% Unsubscribe %></div>`,
+			text: "<% Unsubscribe %>"
+		}
 	}
 } satisfies Partial<MailDataRequired>
 
@@ -36,18 +42,19 @@ export function loadSendgridApi() {
 export async function getIssues(): Promise<IssueEmail[]> {
 	const parser: Parser<Record<string, any>, FeedItem> = new Parser({
 		customFields: {
-			item: ["content:encoded", "content:encodedSnippet"]
+			item: ["content:encoded", "content:encodedSnippet", "description", "poster"]
 		}
 	});
 	const feed = await parser.parseURL('https://fromthesuperhighway.com/rss.xml');
 	const emails: IssueEmail[] = [];
-	feed.items.forEach(item => {
+	feed.items.forEach((item: FeedItem & Parser.Item & { poster?: string }) => {
 		if (!item.title || !item.link) { return; }
-		const data: Omit<Issue, "poster"> = {
+		const data: Issue = {
 			title: item.title,
 			description: item.description,
 			publishDate: item.pubDate ?? new Date("1970"),
 			tags: item.categories,
+			poster: item.poster
 		}
 
 		const slug = item.link.split("/").at(-1);
@@ -81,7 +88,7 @@ export async function sendLatestIssue(to: string): Promise<unknown> {
 
 	console.log("Loading Sendgrid API...");
 	const sendgrid = loadSendgridApi();
-	console.log("Sending test email to: ", testTarget);
+	console.log("Sending test email to: ", to);
 
 	await sendgrid.send({
 		...defaultEmail,
