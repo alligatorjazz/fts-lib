@@ -1,5 +1,6 @@
 import { render } from "@react-email/components";
 import sendgrid, { MailDataRequired } from "@sendgrid/mail";
+import client from "@sendgrid/client"
 import dayjs from "dayjs";
 import "dotenv/config";
 import Parser from 'rss-parser';
@@ -8,10 +9,9 @@ import NewIssue from "./emails/NewIssue.js";
 import Confirmation from "./emails/Confirmation.js";
 
 type FeedItem = {
-	"content:encoded": string,
-	"content:encodedSnippet": string,
 	description: string,
-	poster: string
+	poster: string,
+	markdown: string
 };
 
 const defaultEmail = {
@@ -29,7 +29,7 @@ const defaultEmail = {
 	}
 } satisfies Partial<MailDataRequired>
 
-export function loadSendgridApi() {
+export function loadSendgridMail() {
 	const key = process.env["SENDGRID_API_KEY"];
 	if (!key || key.length === 0) {
 		throw new Error("Sendgrid API key missing or malformed.");
@@ -39,10 +39,22 @@ export function loadSendgridApi() {
 	return sendgrid;
 }
 
+
+export function loadSendgridClient() {
+	const key = process.env["SENDGRID_API_KEY"];
+	if (!key || key.length === 0) {
+		throw new Error("Sendgrid API key missing or malformed.");
+	}
+
+	client.setApiKey(key);
+	return client;
+}
+
+
 export async function getIssues(): Promise<IssueEmail[]> {
 	const parser: Parser<Record<string, any>, FeedItem> = new Parser({
 		customFields: {
-			item: ["content:encoded", "content:encodedSnippet", "description", "poster"]
+			item: ["description", "poster", "markdown"]
 		}
 	});
 	const feed = await parser.parseURL('https://fromthesuperhighway.com/rss.xml');
@@ -59,7 +71,7 @@ export async function getIssues(): Promise<IssueEmail[]> {
 
 		const slug = item.link.split("/").at(-1);
 		if (!slug) { return; }
-		const body = item['content:encoded'];
+		const body = item["markdown"];
 		emails.push({ data, slug, body } as IssueEmail);
 	});
 
@@ -87,7 +99,7 @@ export async function sendLatestIssue(to: string): Promise<unknown> {
 	console.log("Render complete.")
 
 	console.log("Loading Sendgrid API...");
-	const sendgrid = loadSendgridApi();
+	const sendgrid = loadSendgridMail();
 	console.log("Sending test email to: ", to);
 
 	await sendgrid.send({
@@ -112,7 +124,7 @@ export async function sendConfirmationEmail(to: string, code: string): Promise<u
 	console.log("Render complete.")
 
 	console.log("Loading Sendgrid API...");
-	const sendgrid = loadSendgridApi();
+	const sendgrid = loadSendgridMail();
 
 	await sendgrid.send({
 		...defaultEmail,
@@ -122,4 +134,19 @@ export async function sendConfirmationEmail(to: string, code: string): Promise<u
 	});
 
 	return `Email sent to ${to}.`;
+}
+
+export function getFullList() {
+	const client = loadSendgridClient();
+	const data = {
+		"query": "CONTAINS(list_ids, '72d99cd4-4eb0-4560-bb4c-7ac117044175')"
+	};
+
+	const request = {
+		url: `/v3/marketing/contacts/search`,
+		method: 'POST' as const,
+		body: data
+	}
+
+	return client.request(request);
 }

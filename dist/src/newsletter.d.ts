@@ -1,0 +1,11 @@
+import sendgrid from "@sendgrid/mail";
+import client from "@sendgrid/client";
+import "dotenv/config";
+import { type IssueEmail } from "./types.js";
+export declare function loadSendgridMail(): sendgrid.MailService;
+export declare function loadSendgridClient(): client.Client;
+export declare function getIssues(): Promise<IssueEmail[]>;
+export declare function getLatestIssue(): Promise<IssueEmail>;
+export declare function sendLatestIssue(to: string): Promise<unknown>;
+export declare function sendConfirmationEmail(to: string, code: string): Promise<unknown>;
+export declare function getFullList(): Promise<[sendgrid.ClientResponse, any]>;
