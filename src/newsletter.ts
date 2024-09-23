@@ -16,17 +16,17 @@ type FeedItem = {
 
 const defaultEmail = {
 	from: "newsletter@fromthesuperhighway.com",
-	// asm: {
-	// 	groupId: 26518,
-	// 	groupsToDisplay: [26518]
-	// },
-	trackingSettings: {
-		subscriptionTracking: {
-			enable: true,
-			html: `<div style="text-align: center; width: 100%; color: rgb(241, 181, 234) !important;"><% Unsubscribe %></div>`,
-			text: "<% Unsubscribe %>"
-		}
-	}
+	asm: {
+		groupId: 26518,
+		groupsToDisplay: [26518]
+	},
+	// trackingSettings: {
+	// 	subscriptionTracking: {
+	// 		enable: true,
+	// 		html: `<div style="text-align: center; width: 100%; color: rgb(241, 181, 234) !important;"><% Unsubscribe %></div>`,
+	// 		text: "<% Unsubscribe %>"
+	// 	}
+	// }
 } satisfies Partial<MailDataRequired>
 
 export function loadSendgridMail() {
@@ -113,7 +113,6 @@ export async function sendLatestIssue(to: string): Promise<unknown> {
 }
 
 export async function sendConfirmationEmail(to: string, code: string): Promise<unknown> {
-	const issue = await getLatestIssue();
 	console.log(`Preparing send for confirmation email for "${to}"`);
 
 	console.log("Building HTML render...")
@@ -129,7 +128,7 @@ export async function sendConfirmationEmail(to: string, code: string): Promise<u
 	await sendgrid.send({
 		...defaultEmail,
 		to,
-		subject: issue.data.title,
+		subject: "Confirm Your Subscription to FTS",
 		html,
 	});
 

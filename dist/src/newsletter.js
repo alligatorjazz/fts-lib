@@ -8,17 +8,17 @@ import NewIssue from "./emails/NewIssue.js";
 import Confirmation from "./emails/Confirmation.js";
 const defaultEmail = {
     from: "newsletter@fromthesuperhighway.com",
-    // asm: {
-    // 	groupId: 26518,
-    // 	groupsToDisplay: [26518]
-    // },
-    trackingSettings: {
-        subscriptionTracking: {
-            enable: true,
-            html: `<div style="text-align: center; width: 100%; color: rgb(241, 181, 234) !important;"><% Unsubscribe %></div>`,
-            text: "<% Unsubscribe %>"
-        }
-    }
+    asm: {
+        groupId: 26518,
+        groupsToDisplay: [26518]
+    },
+    // trackingSettings: {
+    // 	subscriptionTracking: {
+    // 		enable: true,
+    // 		html: `<div style="text-align: center; width: 100%; color: rgb(241, 181, 234) !important;"><% Unsubscribe %></div>`,
+    // 		text: "<% Unsubscribe %>"
+    // 	}
+    // }
 };
 export function loadSendgridMail() {
     const key = process.env["SENDGRID_API_KEY"];
@@ -89,7 +89,6 @@ export async function sendLatestIssue(to) {
     return `Email sent to ${to}.`;
 }
 export async function sendConfirmationEmail(to, code) {
-    const issue = await getLatestIssue();
     console.log(`Preparing send for confirmation email for "${to}"`);
     console.log("Building HTML render...");
     const html = await render(Confirmation({ code }), { pretty: true });
@@ -102,7 +101,7 @@ export async function sendConfirmationEmail(to, code) {
     await sendgrid.send({
         ...defaultEmail,
         to,
-        subject: issue.data.title,
+        subject: "Confirm Your Subscription to FTS",
         html,
     });
     return `Email sent to ${to}.`;

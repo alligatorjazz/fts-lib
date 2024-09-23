@@ -15,6 +15,7 @@ export function Footer() {
 					<Text className="m-0">6404 Mainsail Ct</Text>
 					<Text className="m-0">Orlando, FL 32807</Text>
 				</Container>
+				{/* <a className="text-accentColor text-sm" href="<%asm_preferences_raw_url%>">Unsubscribe</a> */}
 			</Container>
 		</>
 	);
